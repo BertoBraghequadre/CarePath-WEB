@@ -1,0 +1,101 @@
+:root
+{
+  --main-color-r: 0;
+  --main-color-g: 132;
+  --main-color-b: 255;
+  --main-color: rgb(var(--main-color-r), var(--main-color-g), var(--main-color-b));
+  --main-color-transparent: rgba(var(--main-color-r), var(--main-color-g), var(--main-color-b), 0.5);
+  --negative-text-color: white;
+}
+
+body
+{
+  font-family: 'Roboto', sans-serif;
+  margin: 0 15%;
+}
+
+form
+{
+  width: 100%;
+  margin: 10px auto;
+}
+
+input
+{
+  display: block;
+  width: 220px;
+  height: 40px;
+  padding: 10px;
+  outline: none;
+  border: var(--main-color) solid 1px;
+  box-sizing: border-box;
+}
+
+label
+{
+  display: inline-block;
+}
+
+section
+{
+  margin: 10px auto;
+  border: none;
+}
+
+section:first-child
+{
+  margin: auto;
+}
+
+button
+{
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  color: var(--negative-text-color);
+  background-color: var(--main-color);
+  padding: 10px;
+  height: 35px;
+  box-sizing: border-box;
+  cursor: pointer;
+  -moz-transition: background-color 0.1s;
+  -webkit-transition: background-color 0.1s;
+  transition: background-color 0.1s;
+}
+button:hover {
+  background-color: var(--main-color-transparent);
+}
+button:active {
+  background-color: var(--main-color);
+}
+
+tr, td, th{
+  text-align: left;
+  border: none;
+  box-sizing: border-box;
+}
+
+td, th {
+  padding: 10px;
+}
+
+tr:nth-child(odd){
+  background-color: var(--main-color-transparent);
+}
+tr:nth-child(even){
+  background-color: white;
+}
+tr:first-child{
+  color: var(--negative-text-color);
+  background-color: var(--main-color);
+}
+
+#testo-risultati {
+  color: var(--main-color);
+  margin-top: 4rem;
+}
+
+h1 strong, h2 strong, h3 strong, h4 strong, h5 strong {
+  color: var(--main-color)
+}

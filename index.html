@@ -1,0 +1,85 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+  <header>
+    <!--[if IE]>
+    <p class="browserupgrade">Stai usando una versione <strong>obsoleta</strong> del browser. Per favore <a href="https://browsehappy.com/">aggiorna il tuo browser</a> per migliorare l'esperienza e la sicurezza.</p>
+    <![endif]-->
+    <h1>Segnalazioni COVID-19</h1>
+    <h2>Inserisci dove sei stato e segnala la tua positività o cerca le positività segnalate</h2>
+    <h3>Attualmente attivo solamente per il <strong>Comune di Napoli</strong></h3>
+  </header>
+  <main>
+    <form name="segnalazioni">
+      <section>
+        <label>
+          Indirizzo
+          <input type="list" list="lista-indirizzi" name="indirizzo" value="" required>
+          <datalist id="lista-indirizzi">
+
+          </datalist>
+        </label>
+
+        <label>
+          Civico
+          <input type="text" name="civico" value="" placeholder="Opzionale">
+        </label>
+
+        <label>
+          Nome del Locale
+          <input type="text" name="nomeLocale" value="" placeholder="Opzionale">
+        </label>
+      </section>
+
+      <section>
+        <label>
+          Il
+          <input type="date" name="data" value="" required>
+        </label>
+
+        <label>
+          Dalle
+          <input type="time" name="orarioInizio" value="" required>
+        </label>
+
+        <label>
+          Alle
+          <input type="time" name="orarioFine" value="" required>
+        </label>
+      </section>
+
+      <section>
+        <button type="button" id="pulsante-invia">Invia Segnalazione</button>
+        <button type="button" id="pulsante-cerca">Cerca Segnalazioni</button>
+      </section>
+    </form>
+
+    <section id="risultati-ricerca">
+      <h3 id="testo-risultati" style="display: none">Risultati trovati: {n}</h3>
+      <table id="tabella-risultati" style="display: none">
+        <tr id="tabella-intestazione"><th>Indirizzo</th><th>Nome Locale</th></tr>
+        <template id="template-riga"><tr><td>{indirizzo}</td><td>{locale}</td></tr></template>
+      </table>
+    </section>
+  </main>
+  <script src="js/main.js"></script>
+</body>
+</html>
