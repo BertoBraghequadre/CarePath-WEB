@@ -1,11 +1,21 @@
 ( function () {   // IIFE
+  const map = L.map('mappa').setView([40.8462749, 14.1975387], 12.25);
+  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'pk.eyJ1IjoiZ2FldGFub2lwcG9saXRvIiwiYSI6ImNrYXU1aDFuNjEwbG4ycG81Mjhucm40YzcifQ.FtK7hANUJfhmVSyvmA5y7g'
+  }).addTo(map);
+
   let indirizzi = null;
   const apiUrl = "http://localhost:5000";
-  const templateRiga = document.getElementById("template-riga");   // prendiamo il template, lo aggiungiamo in una variabile
+  /*const templateRiga = document.getElementById("template-riga");   // prendiamo il template, lo aggiungiamo in una variabile
   templateRiga.parentNode.removeChild(templateRiga);                         // e lo eliminiamo.
   const tabella = document.getElementById("tabella-risultati");
   const risultatiRicerca = document.getElementById('risultati-ricerca');
-  const testoRisultati = document.getElementById('testo-risultati');
+  const testoRisultati = document.getElementById('testo-risultati');*/
 
   function clonaTemplate(template){
     let tempTemplate = document.createElement("template");
@@ -13,7 +23,7 @@
     return tempTemplate.content.firstChild;
   }
 
-  function inserisciRiga(indirizzo, nomeLocale) {
+  /*function inserisciRiga(indirizzo, nomeLocale) {
     const riga = clonaTemplate(templateRiga);
     riga.innerHTML = riga.innerHTML.replace("{indirizzo}", indirizzo);
     riga.innerHTML = riga.innerHTML.replace("{locale}", nomeLocale);
@@ -40,6 +50,61 @@
 
     for (let datum of data) { // Loop su ogni elemento dell'array
       inserisciRiga(datum.Indirizzo, datum.NomeLocale);
+    }
+  }*/
+
+  const markers = [];
+
+  function pulisciRisultati() {
+    for (let marker of markers) {
+      marker.remove();
+    }
+  }
+
+  function aggiornaRisultati(data) {
+    pulisciRisultati();
+
+    const numeroRisultati = data.length;
+    const markerRaggruppati = {};
+
+    for (let datum of data) { // Loop su ogni elemento dell'array
+      const lat = datum.Lat;
+      const lon = datum.Lon;
+      const key = lat + ',' + lon;
+      let obj = markerRaggruppati[key];
+      if (obj == null) {
+        markerRaggruppati[key] = {
+          indirizzi: [],
+          nomiLocali: [],
+          lat: lat,
+          lon: lon
+        };
+        obj = markerRaggruppati[key];
+      }
+
+      let indirizzo = datum.Indirizzo.trim();
+      let nomeLocale = datum.NomeLocale.trim();
+      if (indirizzo !== '' && !obj.indirizzi.includes(indirizzo)) {
+        obj.indirizzi.push(indirizzo);
+      }
+
+      if (nomeLocale !== '' && !obj.indirizzi.includes(nomeLocale)) {
+        obj.indirizzi.push(nomeLocale);
+      }
+    }
+
+    for (let key in markerRaggruppati) {
+      if (markerRaggruppati.hasOwnProperty(key)) {
+        const markerRaggruppato = markerRaggruppati[key];
+        const marker = L.marker([markerRaggruppato.lat, markerRaggruppato.lon]).addTo(map);
+        let popupText = '';
+        popupText = '<strong>' + markerRaggruppato.indirizzi.join('<br>') + '</strong>';
+        if (markerRaggruppato.nomiLocali.length > 0){
+          popupText += '<br><br><em>Locali:</em><br>' + markerRaggruppato.nomiLocali.join('<br>')
+        }
+        marker.bindPopup(popupText);
+        markers.push(marker);
+      }
     }
   }
 
@@ -178,10 +243,17 @@
   }
 
   const pulsanteRicerca = document.getElementById('pulsante-cerca');
-  pulsanteRicerca.addEventListener('click', cerca);
-
   const pulsanteInvia = document.getElementById('pulsante-invia');
-  pulsanteInvia.addEventListener('click', invia);
+  document.forms["segnalazioni"].addEventListener('submit', function (e) {
+    e.preventDefault();
+    const submitter = e.submitter;
+    if (submitter === pulsanteRicerca) {
+      cerca();
+    }
+    else if (submitter === pulsanteInvia) {
+      invia();
+    }
+  });
 
   function loadLines(url) {
     const xhr = new XMLHttpRequest();

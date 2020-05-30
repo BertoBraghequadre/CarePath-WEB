@@ -99,3 +99,21 @@ tr:first-child{
 h1 strong, h2 strong, h3 strong, h4 strong, h5 strong {
   color: var(--main-color)
 }
+
+#mappa {
+  height: 66vh;
+}
+
+@media only screen and (max-width: 1024px) {
+  body
+  {
+    margin: 0 10%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  body
+  {
+    margin: 0 5%;
+  }
+}
