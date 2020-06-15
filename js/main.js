@@ -97,8 +97,7 @@
       if (markerRaggruppati.hasOwnProperty(key)) {
         const markerRaggruppato = markerRaggruppati[key];
         const marker = L.marker([markerRaggruppato.lat, markerRaggruppato.lon]).addTo(map);
-        let popupText = '';
-        popupText = '<strong>' + markerRaggruppato.indirizzi.join('<br>') + '</strong>';
+        let popupText = '<strong>' + markerRaggruppato.indirizzi.join('<br>') + '</strong>';
         if (markerRaggruppato.nomiLocali.length > 0){
           popupText += '<br><br><em>Locali:</em><br>' + markerRaggruppato.nomiLocali.join('<br>')
         }
@@ -238,8 +237,8 @@
     };
 
     xhr.open("POST", apiUrl + '/v1/segnalazioni');
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify(obj));
+    xhr.setRequestHeader('Content-Type', 'application/json');     //serve per far capire che abbiamo inviato un json
+    xhr.send(JSON.stringify(obj));      // fa la conversione in json
   }
 
   const pulsanteRicerca = document.getElementById('pulsante-cerca');
@@ -385,5 +384,4 @@
 
   caricaIndirizzi();
 }) ();
-
 
