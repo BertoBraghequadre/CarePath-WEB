@@ -15,7 +15,7 @@
   templateRiga.parentNode.removeChild(templateRiga);                         // e lo eliminiamo.
   const tabella = document.getElementById("tabella-risultati");
   const risultatiRicerca = document.getElementById('risultati-ricerca');
-  const testoRisultati = document.getElementById('testo-risultati');*/
+  const testoRisultati = document.getElementById('testo-risultati');
 
   function clonaTemplate(template){
     let tempTemplate = document.createElement("template");
@@ -23,7 +23,7 @@
     return tempTemplate.content.firstChild;
   }
 
-  /*function inserisciRiga(indirizzo, nomeLocale) {
+  function inserisciRiga(indirizzo, nomeLocale) {
     const riga = clonaTemplate(templateRiga);
     riga.innerHTML = riga.innerHTML.replace("{indirizzo}", indirizzo);
     riga.innerHTML = riga.innerHTML.replace("{locale}", nomeLocale);
@@ -63,8 +63,7 @@
 
   function aggiornaRisultati(data) {
     pulisciRisultati();
-
-    const numeroRisultati = data.length;
+    
     const markerRaggruppati = {};
 
     for (let datum of data) { // Loop su ogni elemento dell'array
@@ -296,7 +295,7 @@
           if (xhr.status >= 200 && xhr.status < 300) {
             const content = xhr.response;
             if (content.trim() !== '') {
-              const lines = content.split(/\r?\n/);
+              const lines = content.split(/\r?\n/);   // separa riga per riga il file con una regex
               const lineCount = lines.length;
               if (lineCount > 0) {
                 let headerLine = lines[0];
